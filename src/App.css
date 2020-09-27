@@ -122,3 +122,15 @@ input[type=text]:hover {
 label:hover {
   font-weight: bold;
 }
+
+@media only screen and (max-width: 768px) {
+  .App {
+    margin: 0;
+  }
+  #input-form {
+    margin-right: 1rem;
+  }
+  #result {
+    text-align: end;
+  }
+}
