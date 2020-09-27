@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/gradient-projection-method/static/css/main.e6050c27.chunk.css",
+    "main.css": "/gradient-projection-method/static/css/main.f018f678.chunk.css",
     "main.js": "/gradient-projection-method/static/js/main.f409d263.chunk.js",
     "main.js.map": "/gradient-projection-method/static/js/main.f409d263.chunk.js.map",
     "runtime-main.js": "/gradient-projection-method/static/js/runtime-main.388ce34a.js",
@@ -8,15 +8,15 @@
     "static/js/2.ec3f52fb.chunk.js": "/gradient-projection-method/static/js/2.ec3f52fb.chunk.js",
     "static/js/2.ec3f52fb.chunk.js.map": "/gradient-projection-method/static/js/2.ec3f52fb.chunk.js.map",
     "index.html": "/gradient-projection-method/index.html",
-    "precache-manifest.7842024036c6050f21eb4f0e59fce8a1.js": "/gradient-projection-method/precache-manifest.7842024036c6050f21eb4f0e59fce8a1.js",
+    "precache-manifest.cddac59be30b82ed1856161b217b8ab9.js": "/gradient-projection-method/precache-manifest.cddac59be30b82ed1856161b217b8ab9.js",
     "service-worker.js": "/gradient-projection-method/service-worker.js",
-    "static/css/main.e6050c27.chunk.css.map": "/gradient-projection-method/static/css/main.e6050c27.chunk.css.map",
+    "static/css/main.f018f678.chunk.css.map": "/gradient-projection-method/static/css/main.f018f678.chunk.css.map",
     "static/js/2.ec3f52fb.chunk.js.LICENSE.txt": "/gradient-projection-method/static/js/2.ec3f52fb.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.388ce34a.js",
     "static/js/2.ec3f52fb.chunk.js",
-    "static/css/main.e6050c27.chunk.css",
+    "static/css/main.f018f678.chunk.css",
     "static/js/main.f409d263.chunk.js"
   ]
 }

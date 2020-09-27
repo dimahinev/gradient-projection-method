@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d886d7ba84d36344f9051c221b6f0132",
+    "revision": "cb8ed2043bd8773514d6ac594a0497e1",
     "url": "/gradient-projection-method/index.html"
   },
   {
-    "revision": "5260ee213346500db5a7",
-    "url": "/gradient-projection-method/static/css/main.e6050c27.chunk.css"
+    "revision": "a227f37722bd3e4889d5",
+    "url": "/gradient-projection-method/static/css/main.f018f678.chunk.css"
   },
   {
     "revision": "5f4658cc9cfc1cfa0fb8",
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gradient-projection-method/static/js/2.ec3f52fb.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "5260ee213346500db5a7",
+    "revision": "a227f37722bd3e4889d5",
     "url": "/gradient-projection-method/static/js/main.f409d263.chunk.js"
   },
   {
