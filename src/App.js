@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { create, all } from 'mathjs'
+import React, { useState } from 'react';
 import './App.css';
+import { Helmet } from 'react-helmet'
 
 
 
@@ -55,10 +55,8 @@ function App() {
   let error = false
 
   function handleChange(event) {
-    // alert(event.target.name)
 
     let tmpInitObj = Object.assign({}, value)
-
 
     switch (event.target.name) {
       case "R":
@@ -138,9 +136,6 @@ function App() {
         throw TypeError('Int is empty')
       }
 
-      // check if is number
-
-      console.log('test', isNaN(Number(value.Int)))
 
       let U0 = value.U0
       let y0, g0, g0Mod
@@ -166,19 +161,15 @@ function App() {
           u2: U0.u2 - (value.Hk(k) * g0.u2),
         }
 
-
         // U1 = Pv (y0)
         U0 = {
           u1: (y0.u1 >= value.U.u1.min) && (y0.u1 <= value.U.u1.max) ? y0.u1 : ((y0.u1 <= value.U.u1.min) ? value.U.u1.min : value.U.u1.max),
           u2: (y0.u2 >= value.U.u2.min) && (y0.u2 <= value.U.u2.max) ? y0.u2 : ((y0.u2 <= value.U.u2.min) ? value.U.u2.min : value.U.u2.max)
         }
-
-
       }
     }
 
-    catch {
-    }
+    catch { }
 
   }
 
@@ -189,8 +180,7 @@ function App() {
       if (!error) {
         calculate()
       }
-    } catch {
-    }
+    } catch { }
   }
 
   function Result() {
@@ -233,9 +223,11 @@ function App() {
       }
       if (isNaN(Number(value.U.u1.max))) {
         throw TypeError('u1[max] is not a Number')
-      } if (isNaN(Number(value.U.u2.min))) {
+      }
+      if (isNaN(Number(value.U.u2.min))) {
         throw TypeError('u2[min] is not a Number')
-      } if (isNaN(Number(value.U.u2.max))) {
+      }
+      if (isNaN(Number(value.U.u2.max))) {
         throw TypeError('u2[max] is not a Number')
       }
       if (isNaN(Number(value.U0.u1))) {
@@ -265,22 +257,18 @@ function App() {
         <h1>y[${result.k}] = ( ${Math.round((result.y0.u1 + Number.EPSILON) * 10000) / 10000}, ${Math.round((result.y0.u2 + Number.EPSILON) * 100) / 100} ) </h1>
         <h1>g[${result.k}] = ( ${Math.round((result.g0.u1 + Number.EPSILON) * 100000000) / 100000000}, ${Math.round((result.g0.u2 + Number.EPSILON) * 100000000) / 100000000} ) </h1>
         <h1>| g[${result.k}] | = ${Math.round((result.g0Mod + Number.EPSILON) * 10000000) / 10000000} </h1>
-  
         `
         }
       }
     }
     catch (e) {
-      console.log('catch')
       error = true
-      console.log(error)
       if (e instanceof TypeError) {
         return { __html: `<h1 id="error-message">${e.message}</h1>` }
       }
       else {
         return { __html: "<h1>Enter correct formula</h1>" }
       }
-
     }
   }
 
@@ -317,7 +305,11 @@ function App() {
 
   return (
     <div className="App">
+      <Helmet>
+        <title>Gradient Projection Method</title>
+      </Helmet>
       <form id="input-form" onSubmit={handleSubmit}>
+
         <div className="label-wrapper">
           <label>
             R:
@@ -394,13 +386,14 @@ function App() {
           <input type="text" name="Int" value={value.Int} onChange={handleChange} />
           </label>
         </div>
+
         <button className="submit" id="reset" onClick={handleFormReset}>Reset</button>
+
         <input className="submit" id="input-submit" type="submit" value="Calculate" />
 
       </form>
-      <div id="result" dangerouslySetInnerHTML={Result()}></div>
 
-      {/* <h1>k = {result.k}</h1> */}
+      <div id="result" dangerouslySetInnerHTML={Result()}></div>
     </div>
   );
 }
