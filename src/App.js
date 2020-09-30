@@ -48,10 +48,10 @@ function App() {
       max: 1800
     },
     E: `10^(-4)`,
-    Int: 60,
+    Int: 5,
   }
   const [value, setValue] = useState(preInit)
-  const [result, setResult] = useState({})
+  const [result, setResult] = useState([])
   let error = false
 
   function handleChange(event) {
@@ -139,9 +139,22 @@ function App() {
 
       let U0 = value.U0
       let y0, g0, g0Mod
-
-      //                          1800             60
+      let RU0
+      let resultArr = []
+      //                          1800             5
       for (let k = 0; k <= value.K.max; k++) {
+
+
+
+        // R(u1, u2)
+        RU0 = math.evaluate(value.R, {
+          u1: U0.u1,
+          u2: U0.u2
+        })
+
+        if (k % value.Int === 0) {
+          resultArr.push({ k, U0, RU0 })
+        }
 
         // gradR(U0)
         g0 = grad(value.R, U0)
@@ -151,7 +164,8 @@ function App() {
 
         // |g0| <= E
         if (g0Mod <= math.evaluate(value.E)) {
-          setResult({ k, U0, y0, g0, g0Mod })
+          resultArr.push({ k, U0, RU0 })
+          setResult(resultArr)
           break
         }
 
@@ -166,6 +180,7 @@ function App() {
           u1: (y0.u1 >= value.U.u1.min) && (y0.u1 <= value.U.u1.max) ? y0.u1 : ((y0.u1 <= value.U.u1.min) ? value.U.u1.min : value.U.u1.max),
           u2: (y0.u2 >= value.U.u2.min) && (y0.u2 <= value.U.u2.max) ? y0.u2 : ((y0.u2 <= value.U.u2.min) ? value.U.u2.min : value.U.u2.max)
         }
+
       }
     }
 
@@ -185,7 +200,6 @@ function App() {
 
   function Result() {
     const isCalculated = JSON.stringify(result) != "{}"
-    console.log('value', value)
     try {
       if (value.R === "") {
         throw TypeError('R is empty')
@@ -246,25 +260,31 @@ function App() {
         throw TypeError('Int is not a Number')
       }
       if (isCalculated) {
-
-        /* k, U0, y0, g0, g0Mod */
+        let tmp = ''
+        for (let i = 0; i < result.length; i++) {
+          if (i == result.length - 1) {
+            tmp += `
+            <b>Result </b>
+          `
+          }
+          tmp += `
+          <h1>k = ${result[i].k}</h1> 
+          <h1>U[${result[i].k}] = ( ${Math.round((result[i].U0.u1 + Number.EPSILON) * 10000) / 10000}, ${Math.round((result[i].U0.u2 + Number.EPSILON) * 100) / 100} ) </h1>
+          <h1>R[${result[i].k}] = ${Math.round((result[i].RU0 + Number.EPSILON) * 100) / 100} </h1>
+          <br/>
+          `
+        }
 
         return {
           __html:
-            `
-        <h1> k = ${result.k}</h1> 
-        <h1>U[${result.k}] = ( ${Math.round((result.U0.u1 + Number.EPSILON) * 10000) / 10000}, ${Math.round((result.U0.u2 + Number.EPSILON) * 100) / 100} ) </h1>
-        <h1>y[${result.k}] = ( ${Math.round((result.y0.u1 + Number.EPSILON) * 10000) / 10000}, ${Math.round((result.y0.u2 + Number.EPSILON) * 100) / 100} ) </h1>
-        <h1>g[${result.k}] = ( ${Math.round((result.g0.u1 + Number.EPSILON) * 100000000) / 100000000}, ${Math.round((result.g0.u2 + Number.EPSILON) * 100000000) / 100000000} ) </h1>
-        <h1>| g[${result.k}] | = ${Math.round((result.g0Mod + Number.EPSILON) * 10000000) / 10000000} </h1>
-        `
+            tmp
         }
       }
     }
     catch (e) {
       error = true
       if (e instanceof TypeError) {
-        return { __html: `<h1 id="error-message">${e.message}</h1>` }
+        return { __html: `<h1 id="error-message" > ${e.message}</h1>` }
       }
       else {
         return { __html: "<h1>Enter correct formula</h1>" }
