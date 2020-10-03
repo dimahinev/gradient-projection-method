@@ -15,10 +15,13 @@ function App() {
 
     // производная по u1
     let u1Der = math.derivative(R, 'u1')
+    console.log('производная по u1', u1Der.toString());
     u1Der = math.evaluate(u1Der.toString(), U0)
 
     // производная по u2
     let u2Der = math.derivative(R, 'u2')
+    console.log('производная по u2', u2Der.toString());
+
     u2Der = math.evaluate(u2Der.toString(), U0)
 
 
@@ -42,7 +45,7 @@ function App() {
       u2: 5
     },
 
-    Hk: (k) => (1 / (k + 1)),
+    Hk: '1 / (k + 1)',
     K: {
       min: 0,
       max: 1800
@@ -85,6 +88,10 @@ function App() {
         tmpInitObj.U0.u2 = event.target.value
         break
 
+      case "H[k]":
+        tmpInitObj.Hk = event.target.value
+        break
+
       case "K[min]":
         tmpInitObj.K.min = event.target.value
         break
@@ -122,6 +129,10 @@ function App() {
       }
       if (value.U0.u2 === "") {
         throw TypeError('U0[u2] is empty')
+      }
+
+      if (value.Hk === "") {
+        throw TypeError('H[k] is empty')
       }
       if (value.K.min === "") {
         throw TypeError('K[min] is empty')
@@ -171,8 +182,8 @@ function App() {
 
         // y0 = u0 - (h0 * g0)
         y0 = {
-          u1: U0.u1 - (value.Hk(k) * g0.u1),
-          u2: U0.u2 - (value.Hk(k) * g0.u2),
+          u1: U0.u1 - (math.evaluate(value.Hk, { k: k }) * g0.u1),
+          u2: U0.u2 - (math.evaluate(value.Hk, { k: k }) * g0.u2),
         }
 
         // U1 = Pv (y0)
@@ -219,6 +230,9 @@ function App() {
       }
       if (value.U0.u2 === "") {
         throw TypeError('U0[u2] is empty')
+      }
+      if (value.Hk === "") {
+        throw TypeError('H[k}] is empty')
       }
       if (value.K.min === "") {
         throw TypeError('K[min] is empty')
@@ -311,7 +325,7 @@ function App() {
           u2: ''
         },
 
-        Hk: (k) => (1 / (k + 1)),
+        Hk: '',
         K: {
           min: '',
           max: ''
@@ -376,6 +390,13 @@ function App() {
           <label>
             U0[u2]:
           <input type="text" name="U0[u2]" value={value.U0.u2} onChange={handleChange} />
+          </label>
+        </div>
+
+        <div className="label-wrapper">
+          <label>
+            H[k]:
+          <input type="text" name="H[k]" value={value.Hk} onChange={handleChange} />
           </label>
         </div>
 
